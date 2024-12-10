@@ -80,6 +80,7 @@
      <string>Файл</string>
     </property>
     <addaction name="saveFileAction"/>
+    <addaction name="openFileAction"/>
    </widget>
    <widget class="QMenu" name="editorMenu">
     <property name="title">
@@ -99,6 +100,7 @@
     <property name="title">
      <string>Настройки</string>
     </property>
+    <addaction name="programSettingAction"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="editorMenu"/>
@@ -129,6 +131,16 @@
   <action name="filterAction">
    <property name="text">
     <string>Фильтр</string>
+   </property>
+  </action>
+  <action name="programSettingAction">
+   <property name="text">
+    <string>Программа</string>
+   </property>
+  </action>
+  <action name="openFileAction">
+   <property name="text">
+    <string>Открыть</string>
    </property>
   </action>
  </widget>
