@@ -1,10 +1,12 @@
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QMainWindow, QHeaderView, QAbstractItemView, QMessageBox
 
 from models.filter_widget import FilterWidget
 from ui.migration.main import Ui_MainWindow
 
 from models.add_widget import AddWidget
 from models.edit_widget import EditWidget
+from models import subscriber_table
 
 
 class TableWidget(QMainWindow):
@@ -22,6 +24,11 @@ class TableWidget(QMainWindow):
         self.ui.filterAction.triggered.connect(self.filter_widget)
         self.ui.programSettingAction.triggered.connect(self.setting_widget)
 
+        self.ui.subscribersTable.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.ui.subscribersTable.setModel(subscriber_table)
+        self.ui.subscribersTable.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.ui.subscribersTable.setSelectionMode(QAbstractItemView.SingleSelection)
+
     def save_file(self):
         pass
 
@@ -33,11 +40,26 @@ class TableWidget(QMainWindow):
         widget.exec()
 
     def edit_widget(self):
-        widget = EditWidget(self)
+        selected_indexes = self.ui.subscribersTable.selectionModel().selectedRows()
+
+        if not selected_indexes:
+            QMessageBox.warning(self, "Редактирование записи", "Выберите строку для редактирования.")
+            return
+
+        row = selected_indexes[0].row()
+        sub = subscriber_table.subscribers[row]
+        widget = EditWidget(sub, row, self)
         widget.exec()
 
     def delete_line(self):
-        pass
+        selected_indexes = self.ui.subscribersTable.selectionModel().selectedRows()
+
+        if not selected_indexes:
+            QMessageBox.warning(self, "Удаление строки", "Выберите строку для удаления.")
+            return
+
+        for index in sorted(selected_indexes, key=lambda x: x.row(), reverse=True):
+            subscriber_table.removeRow(index.row())
 
     def filter_widget(self):
         widget = FilterWidget(self)

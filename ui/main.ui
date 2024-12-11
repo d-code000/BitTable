@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>689</width>
+    <width>673</width>
     <height>549</height>
    </rect>
   </property>
@@ -26,39 +26,7 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QTableWidget" name="subscribersTable">
-          <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>120</number>
-          </attribute>
-          <attribute name="horizontalHeaderStretchLastSection">
-           <bool>false</bool>
-          </attribute>
-          <column>
-           <property name="text">
-            <string>ID</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>ФИО</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Телефонный номер</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Тип абонента</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Дата регистрации</string>
-           </property>
-          </column>
-         </widget>
+         <widget class="QTableView" name="subscribersTable"/>
         </item>
        </layout>
       </widget>
@@ -71,7 +39,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>689</width>
+     <width>673</width>
      <height>33</height>
     </rect>
    </property>

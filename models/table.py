@@ -2,7 +2,7 @@ import dataclasses
 from dataclasses import dataclass
 from datetime import date
 
-from PySide6.QtCore import QAbstractTableModel, Qt
+from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
 
 
 @dataclass
@@ -11,7 +11,7 @@ class Subscriber:
     name: str
     phone_number: str
     user_type: str
-    date: date
+    date: str
 
 
 class SubscriberTable(QAbstractTableModel):
@@ -19,10 +19,10 @@ class SubscriberTable(QAbstractTableModel):
         super().__init__(parent)
         self.subscribers: list[Subscriber] = []
 
-    def rowCount(self, parent):
+    def rowCount(self, parent=QModelIndex()) -> int:
         return len(self.subscribers)
 
-    def columnCount(self, parent):
+    def columnCount(self, parent=QModelIndex()) -> int:
         return len(dataclasses.fields(Subscriber))
 
     def data(self, index, role=Qt.DisplayRole):
@@ -55,7 +55,18 @@ class SubscriberTable(QAbstractTableModel):
                 elif section == 2:
                     return "Номер телефона"
                 elif section == 3:
-                    return "Тип"
+                    return "Тип клиента"
                 elif section == 4:
-                    return "Дата"
+                    return "Дата оформления"
         return None
+
+    def addRow(self, subscriber: Subscriber):
+        row = self.rowCount()
+        self.beginInsertRows(QModelIndex(), row, row)
+        self.subscribers.append(subscriber)
+        self.endInsertRows()
+
+    def updateRow(self, subscriber: Subscriber, row: int):
+        self.beginInsertRows(QModelIndex(), row, row)
+        self.subscribers[row] = subscriber
+        self.endInsertRows()

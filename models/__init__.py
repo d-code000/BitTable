@@ -1,1 +1,3 @@
-from models.table_widget import TableWidget
+from models.table import SubscriberTable
+
+subscriber_table = SubscriberTable()

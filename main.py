@@ -1,5 +1,5 @@
 import sys
-from models import TableWidget
+from models.table_widget import TableWidget
 
 from PySide6.QtWidgets import QApplication
 
