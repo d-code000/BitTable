@@ -1,7 +1,10 @@
+import csv
+
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QHeaderView, QAbstractItemView, QMessageBox
+from PySide6.QtWidgets import QMainWindow, QHeaderView, QAbstractItemView, QMessageBox, QFileDialog
 
 from models.filter_widget import FilterWidget
+from models.table import Subscriber
 from ui.migration.main import Ui_MainWindow
 
 from models.add_widget import AddWidget
@@ -24,16 +27,57 @@ class TableWidget(QMainWindow):
         self.ui.filterAction.triggered.connect(self.filter_widget)
         self.ui.programSettingAction.triggered.connect(self.setting_widget)
 
-        self.ui.subscribersTable.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.ui.subscribersTable.setModel(subscriber_table)
         self.ui.subscribersTable.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.ui.subscribersTable.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.ui.subscribersTable.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.ui.subscribersTable.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
 
     def save_file(self):
-        pass
+        """Сохранение данных таблицы в CSV-файл."""
+        file_path, _ = QFileDialog.getSaveFileName(self, "Сохранить файл", "", "CSV Files (*.csv)")
+        if not file_path:
+            return
+
+        try:
+            with open(file_path, "w", newline="", encoding="utf-8") as file:
+                writer = csv.writer(file)
+                writer.writerow(["ID", "ФИО", "Номер телефона", "Тип клиента", "Дата оформления"])
+                for subscriber in subscriber_table.subscribers:
+                    writer.writerow([
+                        subscriber.user_id,
+                        subscriber.name,
+                        subscriber.phone_number,
+                        subscriber.user_type,
+                        subscriber.date
+                    ])
+            QMessageBox.information(self, "Сохранение файла", "Файл успешно сохранён.")
+        except Exception as e:
+            QMessageBox.critical(self, "Ошибка сохранения", f"Не удалось сохранить файл: {e}")
 
     def open_file(self):
-        pass
+        """Открытие данных из CSV-файла."""
+        file_path, _ = QFileDialog.getOpenFileName(self, "Открыть файл", "", "CSV Files (*.csv)")
+        if not file_path:
+            return
+
+        try:
+            with open(file_path, "r", newline="", encoding="utf-8") as file:
+                reader = csv.reader(file)
+                headers = next(reader, None)
+                subscriber_table.subscribers.clear()
+                for row in reader:
+                    if len(row) == 5:
+                        subscriber = Subscriber(
+                            user_id=int(row[0]),
+                            name=row[1],
+                            phone_number=row[2],
+                            user_type=row[3],
+                            date=row[4]
+                        )
+                        subscriber_table.addRow(subscriber)
+        except Exception as e:
+            QMessageBox.critical(self, "Ошибка открытия", f"Не удалось открыть файл: {e}")
 
     def add_widget(self):
         widget = AddWidget(self)
