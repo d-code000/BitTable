@@ -70,3 +70,13 @@ class SubscriberTable(QAbstractTableModel):
         self.beginInsertRows(QModelIndex(), row, row)
         self.subscribers[row] = subscriber
         self.endInsertRows()
+
+    def removeRow(self, row: int, parent=QModelIndex()):
+        if row < 0 or row >= len(self.subscribers):
+            return False
+
+        self.beginRemoveRows(parent, row, row)
+        del self.subscribers[row]
+        self.endRemoveRows()
+
+        return True

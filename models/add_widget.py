@@ -60,7 +60,7 @@ class AddWidget(QDialog):
     def validate_inputs(self):
         """Проверка всех введённых данных."""
         try:
-            user_id = int(self.ui.lineEditID.text())
+            int(self.ui.lineEditID.text())
         except ValueError:
             self.show_error("ID должен быть числом.")
             return False

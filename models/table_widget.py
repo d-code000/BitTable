@@ -1,12 +1,11 @@
 import csv
 
-from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QMainWindow, QHeaderView, QAbstractItemView, QMessageBox, QFileDialog
 
 from models.filter_widget import FilterWidget
+from models.setting_widget import SettingWidget
 from models.table import Subscriber
 from ui.migration.main import Ui_MainWindow
-
 from models.add_widget import AddWidget
 from models.edit_widget import EditWidget
 from models import subscriber_table
@@ -102,12 +101,12 @@ class TableWidget(QMainWindow):
             QMessageBox.warning(self, "Удаление строки", "Выберите строку для удаления.")
             return
 
-        for index in sorted(selected_indexes, key=lambda x: x.row(), reverse=True):
-            subscriber_table.removeRow(index.row())
+        subscriber_table.removeRow(selected_indexes[0].row())
 
     def filter_widget(self):
         widget = FilterWidget(self)
         widget.exec()
 
     def setting_widget(self):
-        pass
+        widget = SettingWidget(self.ui.subscribersTable, self)
+        widget.exec()

@@ -1,7 +1,7 @@
 from PySide6.QtCore import QDateTime, QDate
 from PySide6.QtGui import QIntValidator, QRegularExpressionValidator
 from PySide6.QtWidgets import QDialog, QMessageBox, QLineEdit
-from ui.migration.add import Ui_FormAdd
+from ui.migration.edit import Ui_FormEdit
 from models import subscriber_table
 from models.table import Subscriber
 from PySide6.QtCore import QRegularExpression
@@ -13,10 +13,10 @@ class EditWidget(QDialog):
 
         self.row = row
 
-        self.ui = Ui_FormAdd()
+        self.ui = Ui_FormEdit()
         self.ui.setupUi(self)
 
-        self.ui.pushButtonSave.clicked.connect(self.add_subscriber)
+        self.ui.pushButtonUpdate.clicked.connect(self.add_subscriber)
         self.ui.pushButtonCancel.clicked.connect(self.close)
 
         # init default val
@@ -62,7 +62,7 @@ class EditWidget(QDialog):
     def validate_inputs(self):
         """Проверка всех введённых данных."""
         try:
-            user_id = int(self.ui.lineEditID.text())
+            int(self.ui.lineEditID.text())
         except ValueError:
             self.show_error("ID должен быть числом.")
             return False
