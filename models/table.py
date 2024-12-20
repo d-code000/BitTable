@@ -7,11 +7,10 @@ from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
 
 @dataclass
 class Subscriber:
-    user_id: int
+    _id: int
     name: str
-    phone_number: str
-    user_type: str
-    date: str
+    count: int
+    flag: bool
 
 
 class SubscriberTable(QAbstractTableModel):
@@ -34,15 +33,13 @@ class SubscriberTable(QAbstractTableModel):
 
         if role == Qt.DisplayRole:
             if column == 0:
-                return subscriber.user_id
+                return subscriber._id
             elif column == 1:
                 return subscriber.name
             elif column == 2:
-                return subscriber.phone_number
+                return subscriber.count
             elif column == 3:
-                return subscriber.user_type
-            elif column == 4:
-                return subscriber.date
+                return subscriber.flag
         return None
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
@@ -51,13 +48,12 @@ class SubscriberTable(QAbstractTableModel):
                 if section == 0:
                     return "ID"
                 elif section == 1:
-                    return "ФИО"
+                    return "Название"
                 elif section == 2:
-                    return "Номер телефона"
+                    return "Количество"
                 elif section == 3:
-                    return "Тип клиента"
-                elif section == 4:
-                    return "Дата оформления"
+                    return "Посчитано"
+
         return None
 
     def addRow(self, subscriber: Subscriber):

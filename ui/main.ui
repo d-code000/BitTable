@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>673</width>
-    <height>549</height>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
       </property>
       <widget class="QWidget" name="subscribersTab">
        <attribute name="title">
-        <string>Абоненты АТС</string>
+        <string>Инвентаризация</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>

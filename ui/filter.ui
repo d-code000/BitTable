@@ -28,7 +28,7 @@
      <item>
       <widget class="QLabel" name="userTypeLable">
        <property name="text">
-        <string>Тип клиента</string>
+        <string>Название</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -36,18 +36,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox">
-       <item>
-        <property name="text">
-         <string>Физическое лицо</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Юридическое лицо</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QLineEdit" name="lineEdit"/>
      </item>
      <item>
       <widget class="QPushButton" name="filterButton">

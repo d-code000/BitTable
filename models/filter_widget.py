@@ -21,9 +21,9 @@ class FilterWidget(QDialog):
         self.ui.resetButton.clicked.connect(self.reset_filter)
 
     def filter(self):
-        filter_text = self.ui.comboBox.currentText()
+        filter_text = self.ui.lineEdit.text()
 
-        self.proxy_model.setFilterKeyColumn(3)
+        self.proxy_model.setFilterKeyColumn(1)
         self.proxy_model.setFilterCaseSensitivity(Qt.CaseInsensitive)
         self.proxy_model.setFilterFixedString(filter_text)
 

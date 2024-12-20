@@ -44,11 +44,10 @@ class TableWidget(QMainWindow):
                 writer.writerow(["ID", "ФИО", "Номер телефона", "Тип клиента", "Дата оформления"])
                 for subscriber in subscriber_table.subscribers:
                     writer.writerow([
-                        subscriber.user_id,
+                        subscriber._id,
                         subscriber.name,
-                        subscriber.phone_number,
-                        subscriber.user_type,
-                        subscriber.date
+                        subscriber.count,
+                        subscriber.flag,
                     ])
             QMessageBox.information(self, "Сохранение файла", "Файл успешно сохранён.")
         except Exception as e:
@@ -66,13 +65,12 @@ class TableWidget(QMainWindow):
                 headers = next(reader, None)
                 subscriber_table.subscribers.clear()
                 for row in reader:
-                    if len(row) == 5:
+                    if len(row) == 4:
                         subscriber = Subscriber(
-                            user_id=int(row[0]),
+                            _id=int(row[0]),
                             name=row[1],
-                            phone_number=row[2],
-                            user_type=row[3],
-                            date=row[4]
+                            count=int(row[2]),
+                            flag=True if row[3] == "True" else False,
                         )
                         subscriber_table.addRow(subscriber)
         except Exception as e:
