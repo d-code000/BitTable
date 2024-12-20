@@ -1,3 +1,5 @@
 ui/migration
 data
 build
+dist
+**/*.spec
